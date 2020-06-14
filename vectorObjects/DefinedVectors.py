@@ -1,4 +1,4 @@
-from vectorObject.VectorMaster import VectorMaster
+from vectorObjects.VectorMaster import VectorMaster
 import operator
 import math
 import numpy

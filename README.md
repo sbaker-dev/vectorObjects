@@ -24,7 +24,7 @@ different that adding a constant. Most Vectors also have some custom methods. So
 value whilst others update the instance of the Vector like normalise
 
 ```python
-from vectorObject.DefinedVectors import Vector3D
+from vectorObjects.DefinedVectors import Vector3D
 
 example_vector = Vector3D(4.5, 3.2, 5.6)
 new_vector = Vector3D(3, 5, 10)
@@ -49,7 +49,7 @@ operator you need to user the operator library. Make sure to pass the operator.t
 will not work. For example pass operator.sub not operator.sub().
 
 ```python
-from vectorObject.VectorMaster import VectorMaster
+from vectorObjects.VectorMaster import VectorMaster
 import operator
 
 # Custom Vector based with VectorMaster inheritance

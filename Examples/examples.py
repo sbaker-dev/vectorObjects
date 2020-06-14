@@ -1,5 +1,5 @@
-from vectorObject.DefinedVectors import Vector3D
-from vectorObject.VectorMaster import VectorMaster
+from vectorObjects.DefinedVectors import Vector3D
+from vectorObjects.VectorMaster import VectorMaster
 import operator
 
 
