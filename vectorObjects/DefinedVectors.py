@@ -271,6 +271,141 @@ class Vector3D(VectorMaster):
         return self._normalise_attributes(self)
 
 
+class VectorRGB(VectorMaster):
+    """
+    A vector object for working with 3D coordinates such as vertex positions in 3D space or a normal direction.
+    """
+    __slots__ = ["r", "g", "b"]
+
+    def __init__(self, r=0, g=0, b=0):
+        super().__init__()
+        self.r = r
+        self.g = g
+        self.b = b
+
+    def __repr__(self):
+        """
+        Return for debugging
+        """
+        return f"{self.r, self.g, self.b}"
+
+    def __str__(self):
+        """
+        Print return for code readability
+        """
+        return f"R: {self.r}, G: {self.g}, B: {self.b}"
+
+    def __getitem__(self, item):
+        """
+        Allows for index calling returns in order of r, g, b.
+        """
+        if item == 0:
+            return self.r
+        elif item == 1:
+            return self.g
+        elif item == 2:
+            return self.b
+        else:
+            raise IndexError("Index out of range: Vector RGB has r[0], g[1] and b[2] items. Item calls greater than 2 "
+                             "not permitted")
+
+    def __iter__(self):
+        """
+        Allows for iteration in order r, g, b
+        """
+        yield self.r
+        yield self.g
+        yield self.b
+
+    def __add__(self, other):
+        """
+        Add ether another instance of vector 3D, an int/float as a constant to all attributes, or a list/tuple of
+        values of equal length to the number of attributes
+
+        :type other: Vector3D | int | float | list | tuple
+        :rtype: tuple
+        """
+        return self._mathematical_operator(self, other, operator.add)
+
+    def __sub__(self, other):
+        """
+        Subtract ether another instance of vector 3D, an int/float as a constant to all attributes, or a list/tuple of
+        values of equal length to the number of attributes
+
+        :type other: Vector3D | int | float | list | tuple
+        :rtype: tuple
+        """
+        return self._mathematical_operator(self, other, operator.sub)
+
+    def __mul__(self, other):
+        """
+        Multiply ether another instance of vector 3D, an int/float as a constant to all attributes, or a list/tuple of
+        values of equal length to the number of attributes
+
+        :type other: Vector3D | int | float | list | tuple
+        :rtype: tuple
+        """
+        return self._mathematical_operator(self, other, operator.mul)
+
+    def __truediv__(self, other):
+        """
+        Divide ether another instance of vector 3D, an int/float as a constant to all attributes, or a list/tuple of
+        values of equal length to the number of attributes
+
+        :type other: Vector3D | int | float | list | tuple
+        :rtype: tuple
+        """
+        return self._mathematical_operator(self, other, operator.truediv)
+
+    def __neg__(self):
+        """
+        Invert the sign of all elements
+        """
+        return self._negative(self)
+
+    def __eq__(self, other):
+        """
+        See if two vectors are equal
+        """
+        return self._equality(self, other)
+
+    def __ne__(self, other):
+        """
+        Opposite of equality
+        """
+        return not self.__eq__(other)
+
+    def to_tuple(self):
+        """
+        Returns a tuple representation of type (r, g, b)
+        """
+        return self._return_tuple(self)
+
+    def to_list(self):
+        """
+        Returns a list representation of type [r, g ,b]
+        """
+        return self._return_list(self)
+
+    def dot_product(self, other):
+        """
+        Calculate the dot product of two instances of the same class object
+        """
+        return self._return_dot_product(self, other)
+
+    def cross_product(self, other):
+        """
+        Calculate the cross product of two instances of the same class object
+        """
+        return self._return_cross_product(self, other)
+
+    def normalise(self):
+        """
+        Normalise attributes
+        """
+        return self._normalise_attributes(self)
+
+
 class Vector4D(VectorMaster):
     """
     Vector for 4D vertex coordinates and normal directions
