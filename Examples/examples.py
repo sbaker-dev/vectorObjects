@@ -1,6 +1,7 @@
-from vectorObjects.DefinedVectors import Vector3D
+from vectorObjects.DefinedVectors import Vector3D, VectorRGB
 from vectorObjects.VectorMaster import VectorMaster
 import operator
+from random import randint
 
 
 example_vector = Vector3D(4.5, 3.2, 5.6)
@@ -45,5 +46,14 @@ class Vector5D(VectorMaster):
             self._mathematical_operator(self, other, operator.add)
 
 
+width = 10
+height = 10
 
+# This shows a random row
+for i in range(width):
+    print(VectorRGB(randint(0, 255), randint(0, 255), randint(0, 255)))
+
+# This is our matrix of our 10 by 10 image
+matrix = [[VectorRGB(randint(0, 255), randint(0, 255), randint(0, 255)) for _ in range(width)] for _ in range(height)]
+print(matrix)
 

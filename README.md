@@ -1,10 +1,9 @@
 # vectorObjects
 #### Object approach to common dimensional vectors 
 
-As part of the [mmdParser][mmd] project of converting and extending the now archived [pymeshio][pymesh], a set of common
-functions programmed as part of the pymeshio relating to Vectors and 3D object rotation matrices where extracted, and 
-then generalised where possible. This was due to some of these objects also having the potential to be used outside of
-this specific use case.
+This project was create by converting and extending a small section of code within the now archived [pymeshio][pymesh], 
+relating to Vectors and 3D object rotation matrices which have been extracted and generalised where possible. This was 
+due to some of these objects also having the potential to be used outside of this specific use case.
  
 vectorObjects also has the ability to allow you to create your own vectors, not pre defined within vectorObjects, 
 quickly via inheritance from a master class of methods. All source code is available on the project [github page][pro]
@@ -18,10 +17,10 @@ python -m pip install vectorObjects
 
 # Basic example
 Pre definied vectors can be imported via vectorObject.DefinedVectors. In this example we are using Vector3D. You can
-define a new Vector3D by assigning its x, y, and z values. Definded Vectors have most dunder methods set via 
-VectorMaster which they inherit from with custom typeing. So the result of adding another instance of Vector 3D is 
-different that adding a constant. Most Vectors also have some custom methods. Some of these like dot_product return a 
-value whilst others update the instance of the Vector like normalise
+define a new Vector3D by assigning its x, y, and z values. Defined Vectors have most dunder methods set via 
+VectorMaster which they inherit. So the result of adding another instance of Vector 3D is different that adding a 
+constant. Most Vectors also have some custom methods. Some of these like dot_product return a value whilst others update
+the instance of the Vector like normalise
 
 ```python
 from vectorObjects.DefinedVectors import Vector3D
@@ -42,11 +41,11 @@ example_vector.normalise()
 print(f"Vector3D after normalisation: {example_vector}\n")
 ```
 
-It is also possible via inheritance to make your own custom vector away with most of the dunders isinstance typing 
-sorted via inheritance. In this case we have an example 5D vector class called Vector5D which inherits VectorMaster.
-You can then just define a dunder, like sub and inherit the logic from VectorMaster. To apply a certain mathematical
-operator you need to user the operator library. Make sure to pass the operator.type rather than the call otherwise it
-will not work. For example pass operator.sub not operator.sub().
+It is also possible via inheritance to make your own custom vector array with most of the dunders sorted via 
+inheritance. In this case we have an example 5D vector class called Vector5D which inherits VectorMaster. You can then 
+just define a dunder, like sub and inherit the logic from VectorMaster. To apply a certain mathematical operator you 
+need to user the operator library. Make sure to pass the operator.type rather than the call otherwise it will not work;
+for example pass operator.sub not operator.sub().
 
 ```python
 from vectorObjects.VectorMaster import VectorMaster
@@ -76,6 +75,26 @@ class Vector5D(VectorMaster):
             print("Do some custom code here")
         else:
             self._mathematical_operator(self, other, operator.add)
+```
+
+You can also then use these vectors to create a matrix. For example, rgb values are a vector that exists in a 
+width*height matrix that cane be constructed in python via nested lists.
+
+```python
+
+from vectorObjects.DefinedVectors import VectorRGB
+from random import randint
+width = 10
+height = 10
+
+# This shows each pixel in a row
+for i in range(width):
+    print(VectorRGB(randint(0, 255), randint(0, 255), randint(0, 255)))
+
+# This is our matrix of our 10 by 10 image
+matrix = [[VectorRGB(randint(0, 255), randint(0, 255), randint(0, 255)) for _ in range(width)] for _ in range(height)]
+print(matrix)
+
 ```
 
 This should give you access to some of the common vectors via the Defined Vectors, and if you need something custom and
