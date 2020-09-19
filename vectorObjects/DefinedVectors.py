@@ -135,6 +135,23 @@ class Vector2D(VectorMaster):
         """
         return self._normalise_attributes(self)
 
+    def rotate_around_point(self, radians, origin=(0, 0)):
+        """
+        Rotate the vector of current point counter clockwise around another point if defined else the origin
+        """
+        offset_x, offset_y = origin
+
+        adjusted_x = (self.x - offset_x)
+        adjusted_y = (self.y - offset_y)
+
+        cos_rad = math.cos(radians)
+        sin_rad = math.sin(radians)
+
+        qx = offset_x + (cos_rad * adjusted_x) + (sin_rad * adjusted_y)
+        qy = offset_y + (-sin_rad * adjusted_x) + (cos_rad * adjusted_y)
+
+        return round(qx, 7), round(qy, 7)
+
 
 class Vector3D(VectorMaster):
     """
