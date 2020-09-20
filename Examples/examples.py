@@ -5,32 +5,33 @@ from random import randint
 
 
 example_vector = Vector3D(4.5, 3.2, 5.6)
-new_vector = Vector3D(3, 5, 10)
+tuple_vector = Vector3D((3, 5, 10))
+list_vector = Vector3D([5, 2, 5])
 
-example_vector + new_vector
+example_vector + tuple_vector
 print(f"Vector3D after addition of b array: {example_vector}\n")
 
 example_vector + 5
 print(f"Vector3D after constant addition: {example_vector}\n")
 
-dot_product = example_vector.dot_product(new_vector)
+dot_product = example_vector.dot_product(tuple_vector)
 print(f"Dot product of a and b: {dot_product}\n")
 
-example_vector.normalise()
-print(f"Vector3D after normalisation: {example_vector}\n")
+list_vector.normalise()
+print(f"Vector3D after normalisation: {list_vector}\n")
+
+example_vector.cross_product(tuple_vector)
+print(f"Vector3D after cross product: {example_vector}\n")
 
 
 # Custom Vector based with VectorMaster inheritance
 class Vector5D(VectorMaster):
     __slots__ = ["a", "b", "c", "d", "e"]
 
-    def __init__(self, a, b, c, d, e):
+    def __init__(self, *args):
         super().__init__()
-        self.a = a
-        self.b = b
-        self.c = c
-        self.d = d
-        self.e = e
+        # Load via inherited self._load so that your custom vector can load all valid int float combinations
+        self.a, self.b, self.c, self.d, self.e = self._load(args)
 
     # Basic dunder have there vector information set within VectorMaster so they can just inherit it
     def __sub__(self, other):
@@ -46,8 +47,8 @@ class Vector5D(VectorMaster):
             self._mathematical_operator(self, other, operator.add)
 
 
-width = 10
-height = 10
+width = 3
+height = 3
 
 # This shows a random row
 for i in range(width):

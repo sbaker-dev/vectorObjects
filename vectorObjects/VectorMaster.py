@@ -7,6 +7,42 @@ class VectorMaster:
     def __init__(self, rounder=14):
         self.round = rounder
 
+    def _load(self, args):
+        """
+        This allows for an args style loading format where users can supply either the attributes as individual floats
+        or ints that will be constructed into a tuple, a tuple of the float or int attributes, or a list or the float or
+        int attributes.
+
+        This method allows for inheritance across vectorObjects
+        """
+        # If no args supplied, just initialise all values to 0 for each slot
+        if len(args) == 0:
+            return [0 for _ in range(len(self.__slots__))]
+
+        # If a tuple created from supplying a value for each slot, or a tuple that contains each slot, is supplied then
+        # initialise each value based on the order of the tuple
+        elif isinstance(args, (tuple, list)):
+            if len(args) == len(self.__slots__):
+                valid = [True for arg in args if isinstance(arg, (float, int))]
+                if len(valid) == len(self.__slots__):
+                    return [arg for arg in args]
+                else:
+                    raise TypeError(f"Vector attributes should be floats or ints but found {len(valid)} floats or ints"
+                                    f" for {args}")
+
+            elif len(args) == 1 and len(args[0]) == len(self.__slots__):
+                valid = [True for arg in args[0] if isinstance(arg, (float, int))]
+                if len(valid) == len(self.__slots__):
+                    return [arg for arg in args[0]]
+                else:
+                    raise TypeError(f"Vector attributes should be floats or ints but found {len(valid)} floats or ints"
+                                    f" for {args}")
+            else:
+                raise ValueError(f"This Vector takes {len(self.__slots__)} args but found {len(args)}: {args}")
+
+        else:
+            raise TypeError(f"Vector args should be a list or tuple but found {type(args)} for {args}")
+
     def _mathematical_operator(self, current_inst, other_inst, operation):
         """
         Update the attributes of the current instance of this class by other instance, either of the same class, a
@@ -82,8 +118,8 @@ class VectorMaster:
         class's attributes as the cross product
         """
         if isinstance(other_inst, type(current_inst)):
-            cross = np.cross(np.array(self._return_list(current_inst)), np.array(self._return_list(other_inst))).tolist()
-            cross = [round(cp, self.round) for cp in list(cross)]
+            cross = np.cross(np.array(self._return_list(current_inst)), np.array(self._return_list(other_inst)))
+            cross = [round(cp, self.round) for cp in cross]
             [setattr(current_inst, attr, value) for attr, value in zip(current_inst.__slots__, cross)]
             return self._return_tuple(current_inst)
         else:
@@ -111,6 +147,3 @@ class VectorMaster:
         else:
             raise TypeError(f"Equality expects two instances of the same class object but found: "
                             f"{type(current_inst)}, {type(other_inst)}")
-
-
-

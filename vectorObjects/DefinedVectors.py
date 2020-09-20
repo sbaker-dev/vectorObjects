@@ -11,10 +11,9 @@ class Vector2D(VectorMaster):
     """
     __slots__ = ['x', 'y']
 
-    def __init__(self, x=0, y=0):
+    def __init__(self, *args):
         super().__init__()
-        self.x = x
-        self.y = y
+        self.x, self.y = self._load(args)
 
     def __repr__(self):
         """
@@ -135,9 +134,11 @@ class Vector2D(VectorMaster):
         """
         return self._normalise_attributes(self)
 
-    def rotate_around_point(self, radians, origin=(0, 0)):
+    def rotate_around_point(self, radians, origin=(0, 0), rounding=7):
         """
         Rotate the vector of current point counter clockwise around another point if defined else the origin
+
+        Source: https://gist.github.com/LyleScott/e36e08bfb23b1f87af68c9051f985302
         """
         offset_x, offset_y = origin
 
@@ -150,7 +151,7 @@ class Vector2D(VectorMaster):
         qx = offset_x + (cos_rad * adjusted_x) + (sin_rad * adjusted_y)
         qy = offset_y + (-sin_rad * adjusted_x) + (cos_rad * adjusted_y)
 
-        return round(qx, 7), round(qy, 7)
+        return round(qx, rounding), round(qy, rounding)
 
 
 class Vector3D(VectorMaster):
@@ -159,11 +160,9 @@ class Vector3D(VectorMaster):
     """
     __slots__ = ["x", "y", "z"]
 
-    def __init__(self, x=0, y=0, z=0):
+    def __init__(self, *args):
         super().__init__()
-        self.x = x
-        self.y = y
-        self.z = z
+        self.x, self.y, self.z = self._load(args)
 
     def __repr__(self):
         """
@@ -294,11 +293,9 @@ class VectorRGB(VectorMaster):
     """
     __slots__ = ["r", "g", "b"]
 
-    def __init__(self, r=0, g=0, b=0):
+    def __init__(self, *args):
         super().__init__()
-        self.r = r
-        self.g = g
-        self.b = b
+        self.r, self.g, self.b = self._load(args)
 
     def __repr__(self):
         """
@@ -430,12 +427,9 @@ class Vector4D(VectorMaster):
 
     __slots__ = ['x', 'y', 'z', 'w']
 
-    def __init__(self, x=0, y=0, z=0, w=0):
+    def __init__(self, args):
         super().__init__()
-        self.x = x
-        self.y = y
-        self.z = z
-        self.w = w
+        self.x, self.y, self.z, self.w = self._load(args)
 
     def __repr__(self):
         """

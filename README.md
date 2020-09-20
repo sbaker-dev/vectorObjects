@@ -17,35 +17,40 @@ python -m pip install vectorObjects
 
 # Basic example
 Pre definied vectors can be imported via vectorObject.DefinedVectors. In this example we are using Vector3D. You can
-define a new Vector3D by assigning its x, y, and z values. Defined Vectors have most dunder methods set via 
-VectorMaster which they inherit. So the result of adding another instance of Vector 3D is different that adding a 
-constant. Most Vectors also have some custom methods. Some of these like dot_product return a value whilst others update
-the instance of the Vector like normalise
+define a new Vector3D by assigning its x, y, and z values individually, as a tuple or a list. Defined Vectors have most
+dunder methods set via VectorMaster which they inherit. So the result of adding another instance of Vector 3D is 
+different that adding a constant. Most Vectors also have some custom methods. Some of these like dot_product return a 
+value whilst others update the instance of the Vector like normalise
 
 ```python
 from vectorObjects.DefinedVectors import Vector3D
 
 example_vector = Vector3D(4.5, 3.2, 5.6)
-new_vector = Vector3D(3, 5, 10)
+tuple_vector = Vector3D((3, 5, 10))
+list_vector = Vector3D([5, 2, 5])
 
-example_vector + new_vector
+example_vector + tuple_vector
 print(f"Vector3D after addition of b array: {example_vector}\n")
 
 example_vector + 5
 print(f"Vector3D after constant addition: {example_vector}\n")
 
-dot_product = example_vector.dot_product(new_vector)
+dot_product = example_vector.dot_product(tuple_vector)
 print(f"Dot product of a and b: {dot_product}\n")
 
-example_vector.normalise()
-print(f"Vector3D after normalisation: {example_vector}\n")
+list_vector.normalise()
+print(f"Vector3D after normalisation: {list_vector}\n")
+
+example_vector.cross_product(tuple_vector)
+print(f"Vector3D after cross product: {example_vector}\n")
 ```
 
 It is also possible via inheritance to make your own custom vector array with most of the dunders sorted via 
-inheritance. In this case we have an example 5D vector class called Vector5D which inherits VectorMaster. You can then 
-just define a dunder, like sub and inherit the logic from VectorMaster. To apply a certain mathematical operator you 
-need to user the operator library. Make sure to pass the operator.type rather than the call otherwise it will not work;
-for example pass operator.sub not operator.sub().
+inheritance. Just set each variable in Slots, and then have the class attributes be loaded via the inherited self._load.
+The self._load, and most of the dunder methods, can be inherited from VectorMaster, so if you just define a dunder, like
+sub, you can then inherit the logic from VectorMaster. To apply a certain mathematical operator you need to user the
+operator library. Make sure to pass the operator.type rather than the call otherwise it will not work; for example pass
+operator.sub not operator.sub().
 
 ```python
 from vectorObjects.VectorMaster import VectorMaster
@@ -55,19 +60,16 @@ import operator
 class Vector5D(VectorMaster):
     __slots__ = ["a", "b", "c", "d", "e"]
 
-    def __init__(self, a, b, c, d, e):
+    def __init__(self, *args):
         super().__init__()
-        self.a = a
-        self.b = b
-        self.c = c
-        self.d = d
-        self.e = e
-        
+        # Load via inherited self._load so that your custom vector can load all valid int float combinations
+        self.a, self.b, self.c, self.d, self.e = self._load(args)
+
     # Basic dunder have there vector information set within VectorMaster so they can just inherit it
     def __sub__(self, other):
         self._mathematical_operator(self, other, operator.sub)
 
-    # If you want the majority of the information in VectorMaster or want to add new options based on a different type 
+    # If you want the majority of the information in VectorMaster or want to add new options based on a different type
     # you can add or change that functionality via isinstance
     # by isinstance
     def __add__(self, other):
@@ -84,17 +86,17 @@ width*height matrix that cane be constructed in python via nested lists.
 
 from vectorObjects.DefinedVectors import VectorRGB
 from random import randint
-width = 10
-height = 10
 
-# This shows each pixel in a row
+width = 3
+height = 3
+
+# This shows a random row
 for i in range(width):
     print(VectorRGB(randint(0, 255), randint(0, 255), randint(0, 255)))
 
 # This is our matrix of our 10 by 10 image
 matrix = [[VectorRGB(randint(0, 255), randint(0, 255), randint(0, 255)) for _ in range(width)] for _ in range(height)]
 print(matrix)
-
 ```
 
 This should give you access to some of the common vectors via the Defined Vectors, and if you need something custom and
