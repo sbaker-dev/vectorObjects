@@ -37,7 +37,7 @@ class Vector2D(VectorMaster):
         elif item == 1:
             return self.y
         else:
-            raise IndexError("Index out of range: Vector 3D has x[0] and y[1] items. Item calls greater than 1 "
+            raise IndexError("Index out of range: Vector 2D has x[0] and y[1] items. Item calls greater than 1 "
                              "not permitted")
 
     def __iter__(self):
@@ -52,7 +52,7 @@ class Vector2D(VectorMaster):
         Add ether another instance of vector 2D, an int/float as a constant to all attributes, or a list/tuple of
         values of equal length to the number of attributes
 
-        :type other: Vector3D | int | float | list | tuple
+        :type other: Vector2D | int | float | list | tuple
         :rtype: tuple
         """
         return self._mathematical_operator(self, other, operator.add)
@@ -62,7 +62,7 @@ class Vector2D(VectorMaster):
         Subtract ether another instance of vector 2D, an int/float as a constant to all attributes, or a list/tuple of
         values of equal length to the number of attributes
 
-        :type other: Vector3D | int | float | list | tuple
+        :type other: Vector2D | int | float | list | tuple
         :rtype: tuple
         """
         return self._mathematical_operator(self, other, operator.sub)
@@ -72,7 +72,7 @@ class Vector2D(VectorMaster):
         Multiply ether another instance of vector 2D, an int/float as a constant to all attributes, or a list/tuple of
         values of equal length to the number of attributes
 
-        :type other: Vector3D | int | float | list | tuple
+        :type other: Vector2D | int | float | list | tuple
         :rtype: tuple
         """
         return self._mathematical_operator(self, other, operator.mul)
@@ -82,7 +82,7 @@ class Vector2D(VectorMaster):
         Divide ether another instance of vector 2D, an int/float as a constant to all attributes, or a list/tuple of
         values of equal length to the number of attributes
 
-        :type other: Vector3D | int | float | list | tuple
+        :type other: Vector2D | int | float | list | tuple
         :rtype: tuple
         """
         return self._mathematical_operator(self, other, operator.truediv)
@@ -336,40 +336,40 @@ class VectorRGB(VectorMaster):
 
     def __add__(self, other):
         """
-        Add ether another instance of vector 3D, an int/float as a constant to all attributes, or a list/tuple of
+        Add ether another instance of VectorRGB, an int/float as a constant to all attributes, or a list/tuple of
         values of equal length to the number of attributes
 
-        :type other: Vector3D | int | float | list | tuple
+        :type other: VectorRGB | int | float | list | tuple
         :rtype: tuple
         """
         return self._mathematical_operator(self, other, operator.add)
 
     def __sub__(self, other):
         """
-        Subtract ether another instance of vector 3D, an int/float as a constant to all attributes, or a list/tuple of
+        Subtract ether another instance of VectorRGB, an int/float as a constant to all attributes, or a list/tuple of
         values of equal length to the number of attributes
 
-        :type other: Vector3D | int | float | list | tuple
+        :type other: VectorRGB | int | float | list | tuple
         :rtype: tuple
         """
         return self._mathematical_operator(self, other, operator.sub)
 
     def __mul__(self, other):
         """
-        Multiply ether another instance of vector 3D, an int/float as a constant to all attributes, or a list/tuple of
+        Multiply ether another instance of VectorRGB, an int/float as a constant to all attributes, or a list/tuple of
         values of equal length to the number of attributes
 
-        :type other: Vector3D | int | float | list | tuple
+        :type other: VectorRGB | int | float | list | tuple
         :rtype: tuple
         """
         return self._mathematical_operator(self, other, operator.mul)
 
     def __truediv__(self, other):
         """
-        Divide ether another instance of vector 3D, an int/float as a constant to all attributes, or a list/tuple of
+        Divide ether another instance of VectorRGB, an int/float as a constant to all attributes, or a list/tuple of
         values of equal length to the number of attributes
 
-        :type other: Vector3D | int | float | list | tuple
+        :type other: VectorRGB | int | float | list | tuple
         :rtype: tuple
         """
         return self._mathematical_operator(self, other, operator.truediv)
@@ -479,7 +479,7 @@ class Vector4D(VectorMaster):
         Add ether another instance of vector 4D, an int/float as a constant to all attributes, or a list/tuple of
         values of equal length to the number of attributes
 
-        :type other: Vector3D | int | float | list | tuple
+        :type other: Vector4D | int | float | list | tuple
         :rtype: tuple
         """
         return self._mathematical_operator(self, other, operator.add)
@@ -489,7 +489,7 @@ class Vector4D(VectorMaster):
         Subtract ether another instance of vector 4D, an int/float as a constant to all attributes, or a list/tuple of
         values of equal length to the number of attributes
 
-        :type other: Vector3D | int | float | list | tuple
+        :type other: Vector4D | int | float | list | tuple
         :rtype: tuple
         """
         return self._mathematical_operator(self, other, operator.sub)
@@ -499,7 +499,7 @@ class Vector4D(VectorMaster):
         Multiply ether another instance of vector 4D, an int/float as a constant to all attributes, or a list/tuple of
         values of equal length to the number of attributes
 
-        :type other: Vector3D | int | float | list | tuple
+        :type other: Vector4D | int | float | list | tuple
         :rtype: tuple
         """
         return self._mathematical_operator(self, other, operator.mul)
@@ -509,7 +509,7 @@ class Vector4D(VectorMaster):
         Divide ether another instance of vector 4D, an int/float as a constant to all attributes, or a list/tuple of
         values of equal length to the number of attributes
 
-        :type other: Vector3D | int | float | list | tuple
+        :type other: Vector4D | int | float | list | tuple
         :rtype: tuple
         """
         return self._mathematical_operator(self, other, operator.truediv)
