@@ -25,7 +25,7 @@ class Vector2D(VectorMaster):
         """
         Print return for code readability
         """
-        return f"X: {self.x}, Y: {self.y}"
+        return f"{self.x, self.y}"
 
     def __getitem__(self, item):
         """
@@ -174,7 +174,7 @@ class Vector3D(VectorMaster):
         """
         Print return for code readability
         """
-        return f"X: {self.x}, Y: {self.y}, Z: {self.z}"
+        return f"{self.x, self.y, self.z}"
 
     def __getitem__(self, item):
         """
@@ -441,7 +441,7 @@ class Vector4D(VectorMaster):
         """
         Print return for code readability
         """
-        return f"X: {self.x}, Y: {self.y}, Z: {self.z}, W: {self.w}"
+        return f"{self.x, self.y, self.z, self.w}"
 
     def __getitem__(self, item):
         """
