@@ -11,9 +11,11 @@ class Vector2D(VectorMaster):
     """
     __slots__ = ['x', 'y']
 
-    def __init__(self, *args):
-        super().__init__()
-        self.x, self.y = self._load(args)
+    def __init__(self, *args, point_load=True):
+        if point_load:
+            self.x, self.y = args
+        else:
+            self.x, self.y = self._load(args)
 
     def __repr__(self):
         """
@@ -160,9 +162,11 @@ class Vector3D(VectorMaster):
     """
     __slots__ = ["x", "y", "z"]
 
-    def __init__(self, *args):
-        super().__init__()
-        self.x, self.y, self.z = self._load(args)
+    def __init__(self, *args, point_load=True):
+        if point_load:
+            self.x, self.y, self.z = args
+        else:
+            self.x, self.y, self.z = self._load(args)
 
     def __repr__(self):
         """
@@ -427,9 +431,11 @@ class Vector4D(VectorMaster):
 
     __slots__ = ['x', 'y', 'z', 'w']
 
-    def __init__(self, args):
-        super().__init__()
-        self.x, self.y, self.z, self.w = self._load(args)
+    def __init__(self, *args, point_load=True):
+        if point_load:
+            self.x, self.y, self.z, self.w = args
+        else:
+            self.x, self.y, self.z, self.w = self._load(args)
 
     def __repr__(self):
         """

@@ -5,8 +5,8 @@ from random import randint
 
 
 example_vector = Vector3D(4.5, 3.2, 5.6)
-tuple_vector = Vector3D((3, 5, 10))
-list_vector = Vector3D([5, 2, 5])
+tuple_vector = Vector3D((3, 5, 10), point_load=False)
+list_vector = Vector3D([5, 2, 5], point_load=False)
 
 example_vector + tuple_vector
 print(f"Vector3D after addition of b array: {example_vector}\n")
@@ -57,4 +57,3 @@ for i in range(width):
 # This is our matrix of our 10 by 10 image
 matrix = [[VectorRGB(randint(0, 255), randint(0, 255), randint(0, 255)) for _ in range(width)] for _ in range(height)]
 print(matrix)
-
