@@ -5,9 +5,6 @@ import sys
 
 
 class VectorMaster:
-    def __init__(self, rounder=14):
-        self.round = rounder
-
     def _load(self, args):
         """
         All args will be submitted in a tuple format, but we may not be expecting it. Load will check to see what the
@@ -30,7 +27,7 @@ class VectorMaster:
         except IndexError:
             return [0 for _ in range(len(self.__slots__))]
 
-    def _mathematical_operator(self, current_inst, other_inst, operation):
+    def _mathematical_operator(self, current_inst, other_inst, operation, rounding=14):
         """
         Update the attributes of the current instance of this class by other instance, either of the same class, a
         constant, or a list/tuple of the same length of the attributes of the current instance.
@@ -46,18 +43,18 @@ class VectorMaster:
         # modify current instances attributes by another vector arrays of the same type
         if isinstance(other_inst, type(current_inst)):
             [setattr(current_inst, current,
-                     round(operation(getattr(current_inst, current), getattr(other_inst, other)), self.round))
+                     round(operation(getattr(current_inst, current), getattr(other_inst, other)), rounding))
              for current, other in zip(current_inst.__slots__, other_inst.__slots__)]
 
         # modify current instances attributes by a constant
         elif isinstance(other_inst, (float, int)):
-            [setattr(current_inst, current, round(operation(getattr(current_inst, current), other_inst), self.round))
+            [setattr(current_inst, current, round(operation(getattr(current_inst, current), other_inst), rounding))
              for current in current_inst.__slots__]
 
         # Modify current instances attributes by a value from a list of tuple of equal length of attributes
         elif isinstance(other_inst, (list, tuple)):
             if len(other_inst) == len(current_inst.__slots__):
-                [setattr(current_inst, attr, round(operation(getattr(current_inst, attr), v), self.round))
+                [setattr(current_inst, attr, round(operation(getattr(current_inst, attr), v), rounding))
                  for attr, v in zip(current_inst.__slots__, other_inst)]
             else:
                 raise ValueError("A list/tuple must be of the same length as the number of attributes of the vector\n"
@@ -99,14 +96,14 @@ class VectorMaster:
             raise TypeError(f"Dot product expects two instances of the same class object but found: "
                             f"{type(current_inst)}, {type(other_inst)}")
 
-    def _return_cross_product(self, current_inst, other_inst):
+    def _return_cross_product(self, current_inst, other_inst, rounding=14):
         """
         Calculate the cross product via numpy.cross, round to deal with floating point errors, then update the current
         class's attributes as the cross product
         """
         if isinstance(other_inst, type(current_inst)):
             cross = np.cross(np.array(self._return_list(current_inst)), np.array(self._return_list(other_inst)))
-            cross = [round(cp, self.round) for cp in cross]
+            cross = [round(cp, rounding) for cp in cross]
             [setattr(current_inst, attr, value) for attr, value in zip(current_inst.__slots__, cross)]
             return self._return_tuple(current_inst)
         else:
