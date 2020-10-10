@@ -39,6 +39,17 @@ class VectorMaster:
                 else:
                     raise TypeError(f"Vector attributes should be floats or ints but found {len(valid)} floats or ints"
                                     f" for {args}")
+
+            # If its a numpy array then we need to make an arg list from the numpy array
+            elif (len(args) == 1) and isinstance(args[0], np.ndarray):
+                args = args[0].tolist()[0]
+                valid = [True for arg in args if isinstance(arg, (float, int))]
+                if len(valid) == len(self.__slots__):
+                    return [arg for arg in args.tolist()]
+                else:
+                    raise TypeError(f"Vector attributes should be floats or ints but found {len(valid)} floats or ints"
+                                    f" for {args}")
+
             else:
                 raise ValueError(f"This Vector takes {len(self.__slots__)} args but found {len(args)}: {args}")
 
