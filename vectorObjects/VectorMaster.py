@@ -18,18 +18,6 @@ class VectorMaster:
             if isinstance(args[0], (int, float, np.intc, np.float32, np.float64)):
                 return args
 
-            # If its a numpy array its likely a contour from cv2
-            elif isinstance(args[0], np.ndarray):
-                # If we have a np.ndarray we need to convert it to a list
-                np_list = args[0].tolist()
-
-                if len(np_list) == 1:
-                    # If its a contour it will be nested list so we need to extract the first element
-                    return np_list[0]
-                else:
-                    # Else return the list of the args
-                    return np_list
-
             # If its a list or tuple then we need to return the first element rather than the tuple containing it
             elif isinstance(args[0], (list, tuple)):
                 return args[0]
