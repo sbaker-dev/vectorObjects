@@ -1,6 +1,7 @@
-import operator
 import numpy as np
+import operator
 import math
+import sys
 
 
 class VectorMaster:
@@ -9,53 +10,37 @@ class VectorMaster:
 
     def _load(self, args):
         """
-        This allows for an args style loading format where users can supply either the attributes as individual floats
-        or ints that will be constructed into a tuple, a tuple of the float or int attributes, or a list or the float or
-        int attributes.
-
-        This method allows for inheritance across vectorObjects
+        All args will be submitted in a tuple format, but we may not be expecting it. Load will check to see what the
+        first element is, and use that to determine the load operation
         """
-        # If no args supplied, just initialise all values to 0 for each slot
+        try:
+            # If its a numeric, then it is the expect tuple and we should just return the args
+            if isinstance(args[0], (int, float, np.intc, np.float32, np.float64)):
+                return args
 
-        if len(args) == 0:
-            return [0 for _ in range(len(self.__slots__))]
+            # If its a numpy array its likely a contour from cv2
+            elif isinstance(args[0], np.ndarray):
+                # If we have a np.ndarray we need to convert it to a list
+                np_list = args[0].tolist()
 
-        # If args are provided, we need to load the args to values based on the type either or args or the args[0]
-        elif isinstance(args, (tuple, list)):
-            # If we have the length of the args needed, then we can assigned them directly
-            if len(args) == len(self.__slots__):
-                valid = [True for arg in args if isinstance(arg, (float, int))]
-                if len(valid) == len(self.__slots__):
-                    return [arg for arg in args]
+                if len(np_list) == 1:
+                    # If its a contour it will be nested list so we need to extract the first element
+                    return np_list[0]
                 else:
-                    raise TypeError(f"Vector attributes should be floats or ints but found {len(valid)} floats or ints"
-                                    f" for {args}")
+                    # Else return the list of the args
+                    return np_list
 
-            # if a list/tuple of args is supplied, then we can still extract it
-            elif len(args) == 1 and len(args[0]) == len(self.__slots__):
-                args = args[0]
-                valid = [True for arg in args if isinstance(arg, (float, int))]
-                if len(valid) == len(self.__slots__):
-                    return [arg for arg in args]
-                else:
-                    raise TypeError(f"Vector attributes should be floats or ints but found {len(valid)} floats or ints"
-                                    f" for {args}")
+            # If its a list or tuple then we need to return the first element rather than the tuple containing it
+            elif isinstance(args[0], (list, tuple)):
+                return args[0]
 
-            # If its a numpy array then we need to make an arg list from the numpy array
-            elif (len(args) == 1) and isinstance(args[0], np.ndarray):
-                args = args[0].tolist()[0]
-                valid = [True for arg in args if isinstance(arg, (float, int))]
-                if len(valid) == len(self.__slots__):
-                    return [arg for arg in args]
-                else:
-                    raise TypeError(f"Vector attributes should be floats or ints but found {len(valid)} floats or ints"
-                                    f" for {args}")
-
+            # Catch unexpected types
             else:
-                raise ValueError(f"This Vector takes {len(self.__slots__)} args but found {len(args)}: {args}")
+                sys.exit(f"Found unexpected type {type(args[0])}")
 
-        else:
-            raise TypeError(f"Vector args should be a list or tuple but found {type(args)} for {args}")
+        # If no args supplied, just initialise all values to 0 for each slot
+        except IndexError:
+            return [0 for _ in range(len(self.__slots__))]
 
     def _mathematical_operator(self, current_inst, other_inst, operation):
         """
