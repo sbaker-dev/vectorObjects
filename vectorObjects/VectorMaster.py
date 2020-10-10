@@ -19,9 +19,9 @@ class VectorMaster:
         if len(args) == 0:
             return [0 for _ in range(len(self.__slots__))]
 
-        # If a tuple created from supplying a value for each slot, or a tuple that contains each slot, is supplied then
-        # initialise each value based on the order of the tuple
+        # If args are provided, we need to load the args to values based on the type either or args or the args[0]
         elif isinstance(args, (tuple, list)):
+            # If we have the length of the args needed, then we can assigned them directly
             if len(args) == len(self.__slots__):
                 valid = [True for arg in args if isinstance(arg, (float, int))]
                 if len(valid) == len(self.__slots__):
@@ -30,10 +30,12 @@ class VectorMaster:
                     raise TypeError(f"Vector attributes should be floats or ints but found {len(valid)} floats or ints"
                                     f" for {args}")
 
+            # if a list/tuple of args is supplied, then we can still extract it
             elif len(args) == 1 and len(args[0]) == len(self.__slots__):
-                valid = [True for arg in args[0] if isinstance(arg, (float, int))]
+                args = args[0]
+                valid = [True for arg in args if isinstance(arg, (float, int))]
                 if len(valid) == len(self.__slots__):
-                    return [arg for arg in args[0]]
+                    return [arg for arg in args]
                 else:
                     raise TypeError(f"Vector attributes should be floats or ints but found {len(valid)} floats or ints"
                                     f" for {args}")
