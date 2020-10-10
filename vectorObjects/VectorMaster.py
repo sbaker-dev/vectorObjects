@@ -16,6 +16,7 @@ class VectorMaster:
         This method allows for inheritance across vectorObjects
         """
         # If no args supplied, just initialise all values to 0 for each slot
+
         if len(args) == 0:
             return [0 for _ in range(len(self.__slots__))]
 
