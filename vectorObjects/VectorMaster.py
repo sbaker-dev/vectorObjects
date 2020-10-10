@@ -45,7 +45,7 @@ class VectorMaster:
                 args = args[0].tolist()[0]
                 valid = [True for arg in args if isinstance(arg, (float, int))]
                 if len(valid) == len(self.__slots__):
-                    return [arg for arg in args.tolist()]
+                    return [arg for arg in args]
                 else:
                     raise TypeError(f"Vector attributes should be floats or ints but found {len(valid)} floats or ints"
                                     f" for {args}")
