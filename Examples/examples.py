@@ -1,4 +1,4 @@
-from vectorObjects.DefinedVectors import Vector3D, VectorRGB
+from vectorObjects.DefinedVectors import Vector2D, Vector3D, VectorRGB
 from vectorObjects.VectorMaster import VectorMaster
 import operator
 from random import randint
@@ -57,3 +57,8 @@ for i in range(width):
 # This is our matrix of our 10 by 10 image
 matrix = [[VectorRGB(randint(0, 255), randint(0, 255), randint(0, 255)) for _ in range(width)] for _ in range(height)]
 print(matrix)
+
+# For 2D vectors we can also subdivide
+point1 = Vector2D(5, 10)
+point2 = Vector2D(10, 20)
+print(f"Sub divided points is {point1.sub_divide(point2, 4)}")

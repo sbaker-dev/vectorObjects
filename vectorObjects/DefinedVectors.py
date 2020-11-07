@@ -1,7 +1,7 @@
 from vectorObjects.VectorMaster import VectorMaster
 import operator
 import math
-import numpy
+import numpy as np
 
 
 class Vector2D(VectorMaster):
@@ -154,6 +154,42 @@ class Vector2D(VectorMaster):
         qy = offset_y + (-sin_rad * adjusted_x) + (cos_rad * adjusted_y)
 
         return round(qx, rounding), round(qy, rounding)
+
+    def sub_divide(self, other, sub_divisions, from_self=True, include_points=True):
+        """
+        This takes the current instance of vector2D and another instance of Vector 2D and in-betweens the points into
+        multiple Vector2D objects equal in length to the sub_divisions.
+
+        :param other: Another instance of a Vector2D object
+        :type other: Vector2D
+
+        :param sub_divisions: The number of Vector 2D objects you want have calculated between this vector and other
+        :type sub_divisions: int
+
+        :param from_self: By default this will create a sub divided list from this point to the next point. If you want
+            the opposite, ie from the other point to this point, set to False
+        :type from_self: bool
+
+        :param include_points: If True the returned list will include the points
+        :type include_points: bool
+
+        :return: A list of Vector2D, with The current instance and previous instance being the first or last based on
+            from_self, with the number of subdivided points between them in form Vector2D equal to sub_divisions.
+        :rtype: list[Vector2D]
+        """
+
+        if from_self:
+            x_spaced = [float(x) for x in np.linspace(self.x, other.x, 2 + sub_divisions)]
+            y_spaced = [float(y) for y in np.linspace(self.y, other.y, 2 + sub_divisions)]
+
+        else:
+            x_spaced = [float(x) for x in np.linspace(other.x, self.x, 2 + sub_divisions)]
+            y_spaced = [float(y) for y in np.linspace(other.y, self.y, 2 + sub_divisions)]
+
+        if include_points:
+            return [Vector2D(x, y) for x, y in zip(x_spaced, y_spaced)]
+        else:
+            return [Vector2D(x, y) for x, y in zip(x_spaced[1:-1], y_spaced[1:-1])]
 
 
 class Vector3D(VectorMaster):
@@ -612,17 +648,17 @@ class PymeshioQuaternion(VectorMaster):
                              " than 3 not permitted")
 
     def __mul__(self, rhs):
-        u=numpy.array([self.x, self.y, self.z], 'f')
-        v=numpy.array([rhs.x, rhs.y, rhs.z], 'f')
-        xyz=self.w*v+rhs.w*u+numpy.cross(u, v)
-        return PymeshioQuaternion(xyz[0], xyz[1], xyz[2], self.w*rhs.w-numpy.dot(u, v))
+        u=np.array([self.x, self.y, self.z], 'f')
+        v=np.array([rhs.x, rhs.y, rhs.z], 'f')
+        xyz=self.w*v+rhs.w*u+np.cross(u, v)
+        return PymeshioQuaternion(xyz[0], xyz[1], xyz[2], self.w*rhs.w-np.dot(u, v))
 
     def dot(self, rhs):
         return self.x*rhs.x+self.y*rhs.y+self.z*rhs.z+self.w*rhs.w
 
     @staticmethod
     def _mmd_quaternion_array(sqY, sqZ, xy, wz, xz, wy, sqX, yz, wx):
-        return numpy.array([
+        return np.array([
             # 1
             [1 - 2 * sqY - 2 * sqZ, 2 * xy + 2 * wz, 2 * xz - 2 * wy, 0],
             # 2
