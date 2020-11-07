@@ -27,7 +27,8 @@ class VectorMaster:
         except IndexError:
             return [0 for _ in range(len(self.__slots__))]
 
-    def _mathematical_operator(self, current_inst, other_inst, operation, rounding=14):
+    @staticmethod
+    def _mathematical_operator(current_inst, other_inst, operation, rounding=14):
         """
         Update the attributes of the current instance of this class by other instance, either of the same class, a
         constant, or a list/tuple of the same length of the attributes of the current instance.
@@ -61,7 +62,7 @@ class VectorMaster:
                                  f"Length of input: {len(other_inst)}\n"
                                  f"Length of attributes: {len(current_inst.__slots__)}")
 
-        return self._return_tuple(current_inst)
+        return current_inst
 
     def _negative(self, instance):
         """
