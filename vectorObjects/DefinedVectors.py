@@ -11,11 +11,12 @@ class Vector2D(VectorMaster):
     """
     __slots__ = ['x', 'y']
 
-    def __init__(self, *args, point_load=True):
-        if point_load:
-            self.x, self.y = args
-        else:
+    def __init__(self, *args, ex=False):
+        # If the user is passing a list or tuple, then we need to set the args from _load
+        if ex:
             self.x, self.y = self._load(args)
+        else:
+            self.x, self.y = args
 
     def __repr__(self):
         """
@@ -198,11 +199,12 @@ class Vector3D(VectorMaster):
     """
     __slots__ = ["x", "y", "z"]
 
-    def __init__(self, *args, point_load=True):
-        if point_load:
-            self.x, self.y, self.z = args
-        else:
+    def __init__(self, *args, ex=False):
+        # If the user is passing a list or tuple, then we need to set the args from _load
+        if ex:
             self.x, self.y, self.z = self._load(args)
+        else:
+            self.x, self.y, self.z = args
 
     def __repr__(self):
         """
@@ -467,11 +469,12 @@ class Vector4D(VectorMaster):
 
     __slots__ = ['x', 'y', 'z', 'w']
 
-    def __init__(self, *args, point_load=True):
-        if point_load:
-            self.x, self.y, self.z, self.w = args
-        else:
+    def __init__(self, *args, ex=False):
+        # If the user is passing a list or tuple, then we need to set the args from _load
+        if ex:
             self.x, self.y, self.z, self.w = self._load(args)
+        else:
+            self.x, self.y, self.z, self.w = args
 
     def __repr__(self):
         """

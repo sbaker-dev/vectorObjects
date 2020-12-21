@@ -5,8 +5,8 @@ from random import randint
 
 
 example_vector = Vector3D(4.5, 3.2, 5.6)
-tuple_vector = Vector3D((3, 5, 10), point_load=False)
-list_vector = Vector3D([5, 2, 5], point_load=False)
+tuple_vector = Vector3D((3, 5, 10), ex=True)
+list_vector = Vector3D([5, 2, 5], ex=True)
 
 example_vector + tuple_vector
 print(f"Vector3D after addition of b array: {example_vector}\n")
