@@ -328,6 +328,46 @@ class Vector3D(VectorMaster):
         """
         return self._normalise_attributes(self)
 
+    def sub_divide(self, other, sub_divisions, from_self=True, include_points=True):
+        """
+        This takes the current instance of vector2D and another instance of Vector3D and in-betweens the points into
+        multiple Vector3D objects equal in length to the sub_divisions.
+
+        :param other: Another instance of a Vector3D object
+        :type other: Vector3D
+
+        :param sub_divisions: The number of Vector3D objects you want have calculated between this vector and other
+        :type sub_divisions: int
+
+        :param from_self: By default this will create a sub divided list from this point to the next point. If you want
+            the opposite, ie from the other point to this point, set to False
+        :type from_self: bool
+
+        :param include_points: If True the returned list will include the points
+        :type include_points: bool
+
+        :return: A list of Vector3D, with The current instance and previous instance being the first or last based on
+            from_self, with the number of subdivided points between them in form Vector2D equal to sub_divisions.
+        :rtype: list[Vector3D]
+        """
+
+        # todo Need to generalise sub_divde
+
+        if from_self:
+            x_spaced = [float(x) for x in np.linspace(self.x, other.x, 2 + sub_divisions)]
+            y_spaced = [float(y) for y in np.linspace(self.y, other.y, 2 + sub_divisions)]
+            z_spaced = [float(z) for z in np.linspace(self.z, other.z, 2 + sub_divisions)]
+
+        else:
+            x_spaced = [float(x) for x in np.linspace(other.x, self.x, 2 + sub_divisions)]
+            y_spaced = [float(y) for y in np.linspace(other.y, self.y, 2 + sub_divisions)]
+            z_spaced = [float(z) for z in np.linspace(other.z, self.z, 2 + sub_divisions)]
+
+        if include_points:
+            return [Vector3D(x, y, z) for x, y, z in zip(x_spaced, y_spaced, z_spaced)]
+        else:
+            return [Vector3D(x, y, z) for x, y, z in zip(x_spaced[1:-1], y_spaced[1:-1], z_spaced[1: -1])]
+
 
 class VectorRGB(VectorMaster):
     """
